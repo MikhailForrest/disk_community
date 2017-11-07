@@ -141,6 +141,13 @@ definitions:
         type: string
     xml:
       name: Disk
+  Disks:
+    type: array
+    xml:
+      name: disks
+      wrapped: true
+    items:
+      $ref: '#/definitions/Disk'
   User_of_comm:
     type: object
     properties:
@@ -163,13 +170,6 @@ definitions:
         $ref: '#/definitions/User_of_comm'
     xml:
       name: Disk with_holder
-  Disks:
-    type: array
-    xml:
-      name: disks
-      wrapped: true
-    items:
-      $ref: '#/definitions/Disk'
   Disks_with_holder:
     type: array
     xml:
