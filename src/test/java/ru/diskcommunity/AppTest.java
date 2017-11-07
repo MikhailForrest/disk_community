@@ -1,4 +1,4 @@
-package ru.diskexchange;
+package ru.diskcommunity;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

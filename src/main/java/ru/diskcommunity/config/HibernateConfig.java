@@ -1,4 +1,4 @@
-package ru.diskexchange.config;
+package ru.diskcommunity.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ public class HibernateConfig {
 
         LocalContainerEntityManagerFactoryBean EnMaFa = new LocalContainerEntityManagerFactoryBean();
         EnMaFa.setDataSource(this.dataSource());
-        EnMaFa.setPackagesToScan(new String[] { "ru.diskexchange.domain" });
+        EnMaFa.setPackagesToScan(new String[] { "ru.diskcommunity.domain" });
 
         HibernateJpaVendorAdapter va = new HibernateJpaVendorAdapter();
         EnMaFa.setJpaVendorAdapter(va);

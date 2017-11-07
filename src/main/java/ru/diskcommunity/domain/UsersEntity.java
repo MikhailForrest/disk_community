@@ -1,4 +1,4 @@
-package ru.diskexchange.domain;
+package ru.diskcommunity.domain;
 
 import javax.persistence.*;
 import java.util.Collection;
