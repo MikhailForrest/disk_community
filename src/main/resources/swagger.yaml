@@ -1,0 +1,405 @@
+swagger: '2.0'
+info:
+  title: Sample disk owner community app
+  description: This is a sample disk owner community server.
+  contact:
+    name: API Support
+    email: treushnikovmv@ya.ru
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: '1.0'
+host: archive.diskcommun.ru
+basePath: /v1
+tags:
+  - name: disks
+    description: Any list of disks
+schemes:
+  - http
+paths:
+  '/own_disks/{ownerId}':
+    get:
+      tags:
+        - disks
+      summary: List of one's own disks for user
+      description: Returns a list of own disks for user
+      operationId: getOwnDisksByOwnerId
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: ownerId
+          in: path
+          description: ID of owner to return
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Disks'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Anyone owner not found
+      security:
+        - api_key: []
+  /free_own_disks:
+    get:
+      tags:
+        - disks
+      summary: Lists of free own disks of each user
+      description: Returns a lists of free own disks for each user
+      operationId: getFreeOwnDisks
+      produces:
+        - application/xml
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Users_of_comm_with_own_disks'
+        '404':
+          description: Anyone disk not found
+      security:
+        - api_key: []
+  '/taken_disks/{holderId}':
+    get:
+      tags:
+        - disks
+      summary: List is taken by user disks
+      description: Returns a list of taken  disks
+      operationId: getTakenDisksByHolderId
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: holderId
+          in: path
+          description: ID of holder to return
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Disks'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Holder not found
+      security:
+        - api_key: []
+  '/given_disks/{ownerId}':
+    get:
+      tags:
+        - disks
+      summary: List is given by user disks
+      description: 'Returns a given list of disks, indicating those who took'
+      operationId: getGivenDisksByOwnerId
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: ownerId
+          in: path
+          description: ID of owner to return
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Disks_with_holder'
+        '400':
+          description: Invalid ID supplied
+      security:
+        - api_key: []
+  /user:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        default:
+          description: successful operation
+  /user/createWithArray:
+    post:
+      tags:
+        - user
+      summary: Creates list of users with given input array
+      description: ''
+      operationId: createUsersWithArrayInput
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: List of user object
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+      responses:
+        default:
+          description: successful operation
+  /user/createWithList:
+    post:
+      tags:
+        - user
+      summary: Creates list of users with given input array
+      description: ''
+      operationId: createUsersWithListInput
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: List of user object
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+      responses:
+        default:
+          description: successful operation
+  /user/login:
+    get:
+      tags:
+        - user
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when token expires
+        '400':
+          description: Invalid username/password supplied
+  /user/logout:
+    get:
+      tags:
+        - user
+      summary: Logs out current logged in user session
+      description: ''
+      operationId: logoutUser
+      produces:
+        - application/xml
+        - application/json
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+  '/user/{username}':
+    get:
+      tags:
+        - user
+      summary: Get user by user name
+      description: ''
+      operationId: getUserByName
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: username
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+    put:
+      tags:
+        - user
+      summary: Updated user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: username
+          in: path
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: User not found
+    delete:
+      tags:
+        - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+securityDefinitions:
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: archive.diskcommun.ru/oauth/dialog
+    flow: implicit
+    scopes:
+      'read:disks': read info about disks
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  Disk:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      caption:
+        type: string
+    xml:
+      name: Disk
+  User_of_comm:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+    xml:
+      name: User_of_comm
+  Disk_with_holder:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      caption:
+        type: string
+      holder:
+        $ref: '#/definitions/User_of_comm'
+    xml:
+      name: Disk with_holder
+  Disks:
+    type: array
+    xml:
+      name: disks
+      wrapped: true
+    items:
+      $ref: '#/definitions/Disk'
+  Disks_with_holder:
+    type: array
+    xml:
+      name: disks_with_holder
+      wrapped: true
+    items:
+      $ref: '#/definitions/Disk_with_holder'
+  User_of_comm_with_own_disks:
+    type: object
+    properties:
+      user:
+        $ref: '#/definitions/User_of_comm'
+      disks:
+        $ref: '#/definitions/Disks'
+    xml:
+      name: user_of_comm_with_own_disks
+  Users_of_comm_with_own_disks:
+    type: array
+    xml:
+      name: user_of_comm_with_own_disks
+      wrapped: true
+    items:
+      $ref: '#/definitions/User_of_comm_with_own_disks'
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      username:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      userStatus:
+        type: integer
+        format: int32
+        description: User Status
+    xml:
+      name: User
