@@ -25,23 +25,23 @@ public class HibernateConfig {
         return dataSource;
     }
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
 
-        LocalContainerEntityManagerFactoryBean EnMaFa = new LocalContainerEntityManagerFactoryBean();
-        EnMaFa.setDataSource(this.dataSource());
-        EnMaFa.setPackagesToScan(new String[] { "ru.diskcommunity.domain" });
+        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactory.setDataSource(this.dataSource());
+        entityManagerFactory.setPackagesToScan(new String[] { "ru.diskcommunity.domain" });
 
-        HibernateJpaVendorAdapter va = new HibernateJpaVendorAdapter();
-        EnMaFa.setJpaVendorAdapter(va);
-        EnMaFa.setJpaProperties(this.hibernateProperties());
-        EnMaFa.afterPropertiesSet();
-        return EnMaFa;
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
+        entityManagerFactory.setJpaProperties(this.hibernateProperties());
+        entityManagerFactory.afterPropertiesSet();
+        return entityManagerFactory;
     }
     @Bean
     public PlatformTransactionManager transactionManager() {
-        JpaTransactionManager TrMa = new JpaTransactionManager();
-        TrMa.setEntityManagerFactory(this.entityManagerFactory().getObject());
-        return TrMa;
+        JpaTransactionManager jpaTransactionManager= new JpaTransactionManager();
+        jpaTransactionManager.setEntityManagerFactory(this.entityManagerFactoryBean().getObject());
+        return jpaTransactionManager;
     }
     Properties hibernateProperties() {
         Properties properties = new Properties();

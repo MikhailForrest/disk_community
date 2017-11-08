@@ -4,12 +4,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "TAKENITEM", schema = "PUBLIC", catalog = "PUBLIC")
-public class TakenitemEntity {
+public class TakenItemEntity {
     private int id;
-    private Integer idD;
-    private Integer idU;
-    private DisksEntity disksByIdD;
-    private UsersEntity usersByIdU;
+    private DisksEntity disks;
+    private UsersEntity users;
 
     @Id
     @Column(name = "ID")
@@ -22,36 +20,16 @@ public class TakenitemEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "ID_D")
-    public Integer getIdD() {
-        return idD;
-    }
-
-    public void setIdD(Integer idD) {
-        this.idD = idD;
-    }
-
-    @Basic
-    @Column(name = "ID_U")
-    public Integer getIdU() {
-        return idU;
-    }
-
-    public void setIdU(Integer idU) {
-        this.idU = idU;
-    }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
 
-        TakenitemEntity that = (TakenitemEntity) o;
+        TakenItemEntity that = (TakenItemEntity) object;
 
         if (id != that.id) return false;
-        if (idD != null ? !idD.equals(that.idD) : that.idD != null) return false;
-        if (idU != null ? !idU.equals(that.idU) : that.idU != null) return false;
+        if (disks != null ? !disks.equals(that.disks) : that.disks != null) return false;
+        if (users != null ? !users.equals(that.users) : that.users != null) return false;
 
         return true;
     }
@@ -59,28 +37,28 @@ public class TakenitemEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (idD != null ? idD.hashCode() : 0);
-        result = 31 * result + (idU != null ? idU.hashCode() : 0);
+        result = 31 * result + (disks != null ? disks.hashCode() : 0);
+        result = 31 * result + (users != null ? users.hashCode() : 0);
         return result;
     }
 
     @ManyToOne
-    @JoinColumn(name = "ID_D", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_DISK", referencedColumnName = "ID")
     public DisksEntity getDisksByIdD() {
-        return disksByIdD;
+        return disks;
     }
 
     public void setDisksByIdD(DisksEntity disksByIdD) {
-        this.disksByIdD = disksByIdD;
+        this.disks = disksByIdD;
     }
 
     @ManyToOne
-    @JoinColumn(name = "ID_U", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_USER", referencedColumnName = "ID")
     public UsersEntity getUsersByIdU() {
-        return usersByIdU;
+        return users;
     }
 
     public void setUsersByIdU(UsersEntity usersByIdU) {
-        this.usersByIdU = usersByIdU;
+        this.users = usersByIdU;
     }
 }

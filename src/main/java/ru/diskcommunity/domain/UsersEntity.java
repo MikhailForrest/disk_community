@@ -9,7 +9,7 @@ public class UsersEntity {
     private int id;
     private String name;
     private Collection<DisksEntity> disksById;
-    private Collection<TakenitemEntity> takenitemsById;
+    private Collection<TakenItemEntity> takenItemsById;
 
     @Id
     @Column(name = "ID")
@@ -33,14 +33,14 @@ public class UsersEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
 
-        UsersEntity that = (UsersEntity) o;
+        UsersEntity usersEntity = (UsersEntity) object;
 
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (id != usersEntity.id) return false;
+        if (name != null ? !name.equals(usersEntity.name) : usersEntity.name != null) return false;
 
         return true;
     }
@@ -62,11 +62,11 @@ public class UsersEntity {
     }
 
     @OneToMany(mappedBy = "usersByIdU")
-    public Collection<TakenitemEntity> getTakenitemsById() {
-        return takenitemsById;
+    public Collection<TakenItemEntity> getTakenItemsById() {
+        return takenItemsById;
     }
 
-    public void setTakenitemsById(Collection<TakenitemEntity> takenitemsById) {
-        this.takenitemsById = takenitemsById;
+    public void setTakenItemsById(Collection<TakenItemEntity> takenItemsById) {
+        this.takenItemsById = takenItemsById;
     }
 }

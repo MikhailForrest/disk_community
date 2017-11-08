@@ -25,7 +25,6 @@ paths:
       description: Returns a list of own disks for user
       operationId: getOwnDisksByOwnerId
       produces:
-        - application/xml
         - application/json
       parameters:
         - name: ownerId
@@ -53,7 +52,6 @@ paths:
       description: Returns a lists of free own disks for each user
       operationId: getFreeOwnDisks
       produces:
-        - application/xml
         - application/json
       parameters: []
       responses:
@@ -73,7 +71,6 @@ paths:
       description: Returns a list of taken  disks
       operationId: getTakenDisksByHolderId
       produces:
-        - application/xml
         - application/json
       parameters:
         - name: holderId
@@ -101,7 +98,6 @@ paths:
       description: 'Returns a given list of disks, indicating those who took'
       operationId: getGivenDisksByOwnerId
       produces:
-        - application/xml
         - application/json
       parameters:
         - name: ownerId
