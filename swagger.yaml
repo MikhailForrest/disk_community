@@ -33,7 +33,7 @@ paths:
           type: integer
           format: int64
         - in: query
-          name: status_disk
+          name: is_free
           description: Type of disk status to return
           required: false
           type: boolean
