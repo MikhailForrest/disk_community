@@ -1,6 +1,7 @@
 package ru.diskcommunity.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -13,6 +14,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@ComponentScan({"ru.diskcommunity.service", "ru.diskcommunity.web"})
 @EnableTransactionManagement
 public class HibernateConfig {
     @Bean
@@ -25,22 +27,20 @@ public class HibernateConfig {
         return dataSource;
     }
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
-
-        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactory.setDataSource(this.dataSource());
-        entityManagerFactory.setPackagesToScan(new String[] { "ru.diskcommunity.domain" });
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactoryBean.setDataSource(this.dataSource());
+        entityManagerFactoryBean.setPackagesToScan("ru.diskcommunity.domain");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
-        entityManagerFactory.setJpaProperties(this.hibernateProperties());
-        entityManagerFactory.afterPropertiesSet();
-        return entityManagerFactory;
+        entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
+        entityManagerFactoryBean.setJpaProperties(this.hibernateProperties());
+        return entityManagerFactoryBean;
     }
     @Bean
-    public PlatformTransactionManager transactionManager() {
+    public JpaTransactionManager transactionManager() {
         JpaTransactionManager jpaTransactionManager= new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(this.entityManagerFactoryBean().getObject());
+        jpaTransactionManager.setEntityManagerFactory(this.entityManagerFactory().getObject());
         return jpaTransactionManager;
     }
     Properties hibernateProperties() {

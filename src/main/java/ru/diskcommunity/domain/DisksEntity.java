@@ -66,7 +66,7 @@ public class DisksEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "ID_OWNER", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_OWNER_MN", referencedColumnName = "ID")
     public UsersEntity getUsersByIdOwner() {
         return usersByIdOwner;
     }

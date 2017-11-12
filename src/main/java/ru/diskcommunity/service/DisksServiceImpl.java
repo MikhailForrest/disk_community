@@ -10,7 +10,7 @@ import ru.diskcommunity.repositories.UsersRepository;
 
 import java.util.List;
 
-@Component
+@Component("disksService")
 public class DisksServiceImpl implements DisksService {
 
     private final DisksRepository disksRepository;
@@ -33,12 +33,12 @@ public class DisksServiceImpl implements DisksService {
 
     public List<DisksEntity> AllFreeDisks() {
 
-        return takenItemRepository.findAllByDisksNotContains();
+        return null;//takenItemRepository.findAllByDisksNotContains();
     }
 
     public List<DisksEntity> DisksTakenByUser(int userId) {
         UsersEntity usersEntity = usersRepository.findOne(userId);
-        return takenItemRepository.findAllByUsers(usersEntity);
+        return null;//takenItemRepository.findAllByUsers(usersEntity);
     }
 
     public List<DisksEntity> DisksTakenFromUser(int userId) {
