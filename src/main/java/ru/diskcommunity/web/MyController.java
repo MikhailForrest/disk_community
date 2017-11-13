@@ -22,7 +22,7 @@ public class MyController {
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    List<DisksEntity> getOwnDisksForUser(@RequestParam(value = "user_id", required = false) Integer userId,
+    List<DisksEntity> getDisksForQuery(@RequestParam(value = "user_id", required = false) Integer userId,
                                          @RequestParam(value = "is_free", required = false) Boolean isFree) {
         if (userId != null) {
             if (isFree != null) {
