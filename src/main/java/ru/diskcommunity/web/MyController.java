@@ -20,29 +20,30 @@ public class MyController {
     @Autowired
     DisksService disksService;
 
-    @RequestMapping(value="", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    List<DisksEntity> getOwnDisksForUser(@RequestParam (value="user_id", required=false) Integer userId,
-                                         @RequestParam (value="is_free", required=false) Boolean isFree){
-        if (userId!=null) {
-            if (isFree!=null){
-                if (isFree=true){
+    List<DisksEntity> getOwnDisksForUser(@RequestParam(value = "user_id", required = false) Integer userId,
+                                         @RequestParam(value = "is_free", required = false) Boolean isFree) {
+        if (userId != null) {
+            if (isFree != null) {
+                if (isFree = true) {
                     List<DisksEntity> listOfDisks = disksService.DisksTakenFromUser(userId);
                     return listOfDisks;
-                }else {
+                } else {
                     List<DisksEntity> listOfDisks = disksService.DisksTakenByUser(userId);
                     return listOfDisks;
                 }
+            } else {
+                List<DisksEntity> listOfDisks = disksService.OwnDisksForUser(userId);
+                return listOfDisks;
             }
-            else
-            { List<DisksEntity> listOfDisks = disksService.OwnDisksForUser(userId);
-                return listOfDisks;}
         } else {
-            if (isFree!=null){
+            if (isFree != null) {
                 return null;
-            }else{
-            List<DisksEntity> listOfDisks = disksService.AllFreeDisks();
-            return listOfDisks;}
+            } else {
+                List<DisksEntity> listOfDisks = disksService.AllFreeDisks();
+                return listOfDisks;
+            }
         }
 
     }
