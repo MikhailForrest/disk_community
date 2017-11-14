@@ -9,4 +9,7 @@ import java.util.List;
 @Repository
 public interface DisksRepository extends JpaRepository<DisksEntity, Integer> {
     List<DisksEntity> findAllByIdOwner(Integer idOwner);
+    List<DisksEntity> findAllByUsersByIdOwnerNull();
+    List<DisksEntity> findAllByUsersByIdOwner(Integer usersByIdOwner);
+    List<DisksEntity> findAllByIdOwnerAndUsersByIdOwnerNotNull(Integer idOwner);
 }

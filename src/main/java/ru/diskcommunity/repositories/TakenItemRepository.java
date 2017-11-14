@@ -10,6 +10,4 @@ import java.util.List;
 
 @Repository
 public interface TakenItemRepository extends JpaRepository<TakenItemEntity, Integer> {
- //   List<DisksEntity> findAllByDisksNotContains();
-  //  List<DisksEntity> findAllByUsers(UsersEntity usersEntity);
 }

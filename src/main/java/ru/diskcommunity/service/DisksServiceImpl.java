@@ -33,15 +33,14 @@ public class DisksServiceImpl implements DisksService {
 
     public List<DisksEntity> AllFreeDisks() {
 
-        return null;//takenItemRepository.findAllByDisksNotContains();
+        return disksRepository.findAllByUsersByIdOwnerNull();
     }
 
     public List<DisksEntity> DisksTakenByUser(int userId) {
-        UsersEntity usersEntity = usersRepository.findOne(userId);
-        return null;//takenItemRepository.findAllByUsers(usersEntity);
+        return disksRepository.findAllByUsersByIdOwner(userId);
     }
 
     public List<DisksEntity> DisksTakenFromUser(int userId) {
-        return null;
+        return disksRepository.findAllByIdOwnerAndUsersByIdOwnerNotNull(userId);
     }
 }
