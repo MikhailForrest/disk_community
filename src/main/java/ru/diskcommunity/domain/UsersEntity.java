@@ -52,7 +52,7 @@ public class UsersEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "usersByIdOwner")
+    @OneToMany(mappedBy = "holder")
     public Collection<DisksEntity> getDisksById() {
         return disksById;
     }

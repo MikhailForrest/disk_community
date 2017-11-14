@@ -9,7 +9,7 @@ public class DisksEntity {
     private int id;
     private String caption;
     private Integer idOwner;
-    private UsersEntity usersByIdOwner;
+    private UsersEntity holder;
     private Collection<TakenItemEntity> takenItemsById;
 
     @Id
@@ -66,13 +66,13 @@ public class DisksEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "ID_OWNER_MN", referencedColumnName = "ID")
-    public UsersEntity getUsersByIdOwner() {
-        return usersByIdOwner;
+    @JoinColumn(name = "HOLDER", referencedColumnName = "ID")
+    public UsersEntity getHolder() {
+        return holder;
     }
 
-    public void setUsersByIdOwner(UsersEntity usersByIdOwner) {
-        this.usersByIdOwner = usersByIdOwner;
+    public void setHolder(UsersEntity holder) {
+        this.holder = holder;
     }
 
     @OneToMany(mappedBy = "disksByIdD")
